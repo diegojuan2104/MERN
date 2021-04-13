@@ -1,4 +1,4 @@
-const Usuario = require("../Models/Usuario");
+const Usuario = require("../models/Usuario");
 const bcryptjs = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
@@ -28,9 +28,7 @@ exports.autenticarUsuario = async (req, res) => {
     //Crear y firmar el JWT
     const payload = {
       usuario: {
-        id: {
-          id: usuario.id,
-        },
+        id: usuario.id,
       },
     };
 
@@ -39,7 +37,7 @@ exports.autenticarUsuario = async (req, res) => {
       payload,
       process.env.SECRETA,
       {
-        expiresIn: 3600,
+        expiresIn: 3600000,
       },
       (error, token) => {
         if (error) throw error;

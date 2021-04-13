@@ -1,4 +1,4 @@
-const Usuario = require("../Models/Usuario");
+const Usuario = require("../models/Usuario");
 const bcryptjs = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
@@ -8,8 +8,8 @@ require("dotenv").config({ path: "variables.env" });
 exports.crearUsuario = async (req, res) => {
   //revisar si hay errores
   const errores = validationResult(req);
-  if(!errores.isEmpty()){
-      return res.status(400).json({errores: errores.array()});
+  if (!errores.isEmpty()) {
+    return res.status(400).json({ errores: errores.array() });
   }
 
   const { email, password } = req.body;
@@ -39,9 +39,7 @@ exports.crearUsuario = async (req, res) => {
     //Crear y firmar el JWT
     const payload = {
       usuario: {
-        id: {
-          id: usuario.id,
-        },
+        id: usuario.id,
       },
     };
 
@@ -50,7 +48,7 @@ exports.crearUsuario = async (req, res) => {
       payload,
       process.env.SECRETA,
       {
-        expiresIn: 3600,
+        expiresIn: 3600000,
       },
       (error, token) => {
         if (error) throw error;
